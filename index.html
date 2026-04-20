@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Football Player App</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+
+    h1 {
+        text-align: center;
+    }
+
+    .form, .search {
+        width: 300px;
+        margin: 10px auto;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+    input, select, button {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+    }
+
+    button {
+        background: green;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background: green;
+        color: white;
+    }
+
+    .delete {
+        background: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+    }
+</style>
+```
+
+</head>
+<body>
+
+<h1>⚽ Football Player Management</h1>
+<a href="index.html" class="btn btn-outline-primary">
+    <i class="fa fa-download"></i> LINK
+</a>
+
+<div class="form">
+    <input type="text" id="name" placeholder="Player Name">
+    <input type="number" id="number" placeholder="Jersey Number">
+
+```
+<select id="position">
+    <option value="Goalkeeper">Goalkeeper</option>
+    <option value="Defender">Defender</option>
+    <option value="Midfielder">Midfielder</option>
+    <option value="Winger">Winger</option>
+    <option value="Striker">Striker</option>
+</select>
+
+<input type="number" id="age" placeholder="Age">
+
+<button onclick="addPlayer()">Add Player</button>
+```
+
+</div>
+
+<div class="search">
+    <input type="text" id="search" placeholder="Search player..." onkeyup="searchPlayer()">
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Position</th>
+            <th>Age</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="playerTable"></tbody>
+</table>
+
+<script>
+    let players = [];
+
+    function displayData(data = players) {
+        let table = document.getElementById("playerTable");
+        table.innerHTML = "";
+
+        data.forEach((p, index) => {
+            table.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${p.name}</td>
+                    <td>${p.number}</td>
+                    <td>${p.position}</td>
+                    <td>${p.age}</td>
+                    <td>
+                        <button class="delete" onclick="deletePlayer(${index})">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    function addPlayer() {
+        let name = document.getElementById("name").value;
+        let number = document.getElementById("number").value;
+        let position = document.getElementById("position").value;
+        let age = document.getElementById("age").value;
+
+        if (name === "" || number === "" || age === "") {
+            alert("Please fill all fields!");
+            return;
+        }
+
+        players.push({ name, number, position, age });
+
+        document.getElementById("name").value = "";
+        document.getElementById("number").value = "";
+        document.getElementById("age").value = "";
+
+        displayData();
+    }
+
+    function deletePlayer(index) {
+        players.splice(index, 1);
+        displayData();
+    }
+
+    function searchPlayer() {
+        let keyword = document.getElementById("search").value.toLowerCase();
+        let result = players.filter(p => p.name.toLowerCase().includes(keyword));
+        displayData(result);
+    }
+</script>
+
+
+</body>
+</html>
